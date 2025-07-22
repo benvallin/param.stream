@@ -1,10 +1,10 @@
 #' Write parameters log file
 #'
-#' @param params data.frame or tibble with character column <gene_id> and double columns representing sample-specific gene counts.
-#' @param out_dir_path character vector of length 1 or name representing gene ID. Must be a column name of input.
-#' @param params_log_table data.frame or tibble with character / factor columns <sample_id_var> and <group_id_vars>.
+#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.
+#' @param out_dir_path character vector of length 1 representing the output directory where the params.log file should be stored.
+#' @param params_log_table logical vector of length 1 indicating if the params log table should be returned.
 #'
-#' @return a tibble with number of cells, number of expressing cells and proportion of expressing cells per biological group ID.
+#' @return a params.log file written in <out_dir_path> and optionally the corresponding params log table.
 #' @export
 #'
 #' @examples
@@ -18,10 +18,14 @@
 #' min_freq_incl <- 0.2
 #' padj <- 0.05
 #'
+#' params <- c("input_count", "model_formula", "cell_type", "lines",
+#'             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj")
+#'
 #' # Write parameters log file
-#' write_params_log(params = c("input_count", "model_formula", "cell_type", "lines",
-#'                             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj"),
-#'                  out_dir_path = "~")
+#' write_params_log(params = params, out_dir_path = "~")
+#'
+#' # Delete example parameters log file
+#' file.remove("~/params.log")
 #'
 write_params_log <- function(params, out_dir_path, params_log_table = FALSE) {
 

@@ -1,3 +1,34 @@
+#' Get parameters log ID
+#'
+#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.
+#' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
+#'
+#' @return the log ID matching <params> in the params.log file at <in_dir_path>.
+#' @export
+#'
+#' @examples
+#' # Define analysis parameters
+#' input_count <- "tpm_lengthScaledTPM"
+#' model_formula <- "~ n_gene_on + exposure + (1 | line_name)"
+#' cell_type <- "neuron"
+#' lines <- c("B856", "B156", "B067")
+#' protein_coding_only <- TRUE
+#' min_cnt_excl <- 0
+#' min_freq_incl <- 0.2
+#' padj <- 0.05
+#'
+#' params <- c("input_count", "model_formula", "cell_type", "lines",
+#'             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj")
+#'
+#' # Write parameters log file
+#' write_params_log(params = params, out_dir_path = "~")
+#'
+#' # Get parameters log ID
+#' get_params_log_id(params = params, in_dir_path = "~")
+#'
+#' # Delete example parameters log file
+#' file.remove("~/params.log")
+#'
 get_params_log_id <- function(params, in_dir_path) {
 
   # Check that in_dir_path is a valid and existing path
