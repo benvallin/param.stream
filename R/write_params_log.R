@@ -57,7 +57,12 @@ write_params_log <- function(params, out_dir_path, params_log_table = FALSE) {
   }
 
   # Build params log
-  # params <- substitute(params)
+  uneval_params <- substitute(params)
+
+  if(is.call(uneval_params)) {
+
+    params <- substitute(params)
+  }
 
   current_log <- do.call(what = make_params_log, args = list(params))
 
