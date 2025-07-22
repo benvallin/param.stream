@@ -1,11 +1,23 @@
 Package: param.stream
-Title: What the Package Does (One Line, Title Case)
+Title: Stream parameter values across files
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person(
+    given = "Benjamin", 
+    family = "Vallin", 
+    email = "ben.vallin@gmail.com", 
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0009-0008-4907-4330")
+    )
+Description: Helper functions to track parameters values across data analysis files.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+URL: https://github.com/benvallin/params.io
+BugReports: https://github.com/benvallin/params.io/issues
+Imports: 
+    utils
+Depends: 
+    R (>= 3.5)
+LazyData: true
