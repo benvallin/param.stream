@@ -30,7 +30,7 @@ get_params_log_id <- function(params, in_dir_path) {
   }
 
   # Build params log
-  params <- substitute(params)
+  # params <- substitute(params)
 
   current_log <- do.call(what = make_params_log, args = list(params))
 
