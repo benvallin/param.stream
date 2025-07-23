@@ -75,8 +75,8 @@ make_params_log <- function(params) {
   output <- lapply(X = params,
                    FUN = function(x) {
 
-                     eval(as.symbol(x),
-                          envir = .GlobalEnv)
+                     as.character(eval(as.symbol(x),
+                                       envir = .GlobalEnv))
 
                    })
 
@@ -89,7 +89,7 @@ make_params_log <- function(params) {
 
                    })
 
-  output <- as.character(unlist(output))
+  output <- unlist(output)
 
   timestamp <- format(Sys.time(), "%Y.%m.%d_%H:%M:%S")
 
