@@ -74,18 +74,24 @@ get_params_log_id <- function(params, in_dir_path) {
 
   # Check if current log is identical to one of previous logs
   previous_log <- utils::read.table(file = paste0(in_dir_path, "params.log"),
-                                    header = TRUE)
+                                    header = TRUE,
+                                    colClasses = "character",
+                                    stringsAsFactors = FALSE)
 
   previous_log <- split(x = previous_log,
                         f = previous_log$log_id)
 
   previous_log_params <- lapply(X = previous_log,
-                                FUN = function(x) x[, c("nm", "val")])
+                                FUN = function(x) {
+
+                                  rownames(x) <- NULL
+                                  x[, c("nm", "val")]
+
+                                })
 
   previous_is_current <- vapply(X = previous_log_params,
                                 FUN = function(x) {
 
-                                  rownames(x) <- NULL
                                   identical(x, current_log_params)
 
                                 },

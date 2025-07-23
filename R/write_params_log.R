@@ -27,7 +27,7 @@
 #' # Delete example parameters log file
 #' file.remove("~/params.log")
 #'
-write_params_log <- function(params, out_dir_path, params_log_table = FALSE) {
+write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
 
   # Check that out_dir_path is a valid and existing path
   if(!is.character(out_dir_path) ||
@@ -103,18 +103,24 @@ write_params_log <- function(params, out_dir_path, params_log_table = FALSE) {
   if(params.log_exists) {
 
     previous_log <- utils::read.table(file = paste0(out_dir_path, "params.log"),
-                                      header = TRUE)
+                                      header = TRUE,
+                                      colClasses = "character",
+                                      stringsAsFactors = FALSE)
 
     previous_log <- split(x = previous_log,
                           f = previous_log$log_id)
 
     previous_log_params <- lapply(X = previous_log,
-                                  FUN = function(x) x[, c("nm", "val")])
+                                  FUN = function(x) {
+
+                                    rownames(x) <- NULL
+                                    x[, c("nm", "val")]
+
+                                  })
 
     previous_is_current <- vapply(X = previous_log_params,
                                   FUN = function(x) {
 
-                                    rownames(x) <- NULL
                                     identical(x, current_log_params)
 
                                   },

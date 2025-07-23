@@ -4,7 +4,7 @@
 \alias{write_params_log}
 \title{Write parameters log file}
 \usage{
-write_params_log(params, out_dir_path, params_log_table = FALSE)
+write_params_log(params, out_dir_path, params_log_table = TRUE)
 }
 \arguments{
 \item{params}{character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.}
