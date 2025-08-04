@@ -1,6 +1,6 @@
 #' Get log ID from parameters values
 #'
-#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.
+#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.
 #' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
 #'
 #' @return the log ID matching <params> in the params.log file at <in_dir_path>.

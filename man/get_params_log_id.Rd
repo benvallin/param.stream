@@ -7,7 +7,7 @@
 get_params_log_id(params, in_dir_path)
 }
 \arguments{
-\item{params}{character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.}
+\item{params}{character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.}
 
 \item{in_dir_path}{character vector of length 1 representing the input directory the params.log file should be read from.}
 }

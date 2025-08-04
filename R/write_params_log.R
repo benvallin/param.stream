@@ -1,6 +1,6 @@
 #' Write parameters log file
 #'
-#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.
+#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.
 #' @param out_dir_path character vector of length 1 representing the output directory where the params.log file should be stored.
 #' @param params_log_table logical vector of length 1 indicating if the params log table should be returned.
 #'

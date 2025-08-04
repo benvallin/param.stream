@@ -1,6 +1,6 @@
 #' Get log ID from parameters list
 #'
-#' @param params_list named list of parameter values. Each element should be a parameter name - value pair.
+#' @param params_list named list of parameter values. Each element should be a parameter name - value pair. Values should be atomic vectors or NULL.
 #' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
 #'
 #' @return the log ID matching <params_list> in the params.log file at <in_dir_path>.
@@ -69,18 +69,28 @@ get_params_log_id_from_list <- function(params_list, in_dir_path) {
   if(!is.list(params_list) ||
      is.null(names(params_list)) ||
      !all(vapply(X = params_list,
-                 FUN = function(x) is.atomic(x),
+                 FUN = function(x) is.atomic(x) | is.null(x),
                  FUN.VALUE = NA))) {
 
     stop("Invalid params_list argument.",
-         "\nInput params_list is not a named list of atomic vectors.",
+         "\nInput params_list is not a named list of atomic or NULL vectors.",
          call. = FALSE)
 
   }
 
   # Build params log
   current_log_params <- lapply(X = params_list,
-                               FUN = function(x) paste0(x, collapse = "_"))
+                               FUN = function(x) {
+
+                                 if(is.null(x)) {
+
+                                   x <- "NULL"
+
+                                 }
+
+                                 paste0(x, collapse = "_")
+
+                               })
 
   current_log_params <- current_log_params[order(names(current_log_params))]
 

@@ -7,7 +7,7 @@
 write_params_log(params, out_dir_path, params_log_table = TRUE)
 }
 \arguments{
-\item{params}{character vector of object names. All objects should be defined in the global environment and bound to atomic vectors.}
+\item{params}{character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.}
 
 \item{out_dir_path}{character vector of length 1 representing the output directory where the params.log file should be stored.}
 

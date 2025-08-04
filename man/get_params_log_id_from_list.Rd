@@ -7,7 +7,7 @@
 get_params_log_id_from_list(params_list, in_dir_path)
 }
 \arguments{
-\item{params_list}{named list of parameter values. Each element should be a parameter name - value pair.}
+\item{params_list}{named list of parameter values. Each element should be a parameter name - value pair. Values should be atomic vectors or NULL.}
 
 \item{in_dir_path}{character vector of length 1 representing the input directory the params.log file should be read from.}
 }

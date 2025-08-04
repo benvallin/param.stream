@@ -56,15 +56,21 @@ make_params_log <- function(params) {
   }
 
   # Check that params names are bound to atomic vectors
-  params_val_not_atomic <- vapply(X = params,
-                                  FUN = function(x) !is.atomic(eval(as.symbol(x))),
-                                  FUN.VALUE = NA)
+  params_val_not_atomic_not_null <- vapply(X = params,
+                                           FUN = function(x) {
 
-  params_val_not_atomic <- params[params_val_not_atomic]
+                                             p <- eval(as.symbol(x))
 
-  if(length(params_val_not_atomic) > 0L) {
+                                             !is.atomic(p) & !is.null(p)
 
-    stop("Params ", paste0(params_val_not_atomic, collapse = ", "), " not of atomic type.",
+                                           },
+                                           FUN.VALUE = NA)
+
+  params_val_not_atomic_not_null <- params[params_val_not_atomic_not_null]
+
+  if(length(params_val_not_atomic_not_null) > 0L) {
+
+    stop("Params ", paste0(params_val_not_atomic_not_null, collapse = ", "), " not of atomic type or NULL.",
          call. = FALSE)
 
   }
@@ -75,9 +81,18 @@ make_params_log <- function(params) {
   output <- lapply(X = params,
                    FUN = function(x) {
 
-                     as.character(eval(as.symbol(x),
-                                       envir = .GlobalEnv))
+                     p <- eval(as.symbol(x))
 
+                     if(is.null(p)) {
+
+                       "NULL"
+
+                     } else {
+
+                       as.character(eval(as.symbol(x),
+                                         envir = .GlobalEnv))
+
+                     }
                    })
 
   output <- lapply(X = output,
