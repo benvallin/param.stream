@@ -47,13 +47,8 @@ get_params_log_id <- function(params, in_dir_path) {
 
   }
 
-  # Append trailing "/" to in_dir_path if missing
-  in_dir_path <- ifelse(grepl(pattern = "^.*/$", x = in_dir_path),
-                        in_dir_path,
-                        paste0(in_dir_path, "/"))
-
   # Check that params.log file exists in in_dir_path
-  if(!file.exists(paste0(in_dir_path, "params.log"))) {
+  if(!file.exists(file.path(in_dir_path, "params.log"))) {
 
     stop("params.log file not found in in_dir_path.",
          call. = FALSE)
@@ -73,7 +68,7 @@ get_params_log_id <- function(params, in_dir_path) {
   current_log_params <- current_log[, c("nm", "val")]
 
   # Check if current log is identical to one of previous logs
-  previous_log <- utils::read.table(file = paste0(in_dir_path, "params.log"),
+  previous_log <- utils::read.table(file = file.path(in_dir_path, "params.log"),
                                     header = TRUE,
                                     colClasses = "character",
                                     stringsAsFactors = FALSE)
