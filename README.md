@@ -2,7 +2,7 @@
 
 **Parameter-Based Run Tracking for Reproducible Data Analysis Workflows**
 
-A lightweight parameter-to-run identifier registry for deterministic result storage and retrieval in R-based data analysis workflows.
+A lightweight parameter-to-run identifier registry for deterministic result storage and retrieval in data analysis workflows.
 
 
 ---
@@ -20,9 +20,9 @@ The package is also available from Python via the wrapper package `py-paramstrea
 
 ## Installation
 
-You can install the development version of paramstream from [GitHub](https://github.com/) with:
+You can install the development version of `paramstream` from [GitHub](https://github.com/) with:
 
-``` r
+```r
 remotes::install_github("benvallin/paramstream")
 ```
 
