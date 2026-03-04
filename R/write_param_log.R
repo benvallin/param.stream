@@ -1,33 +1,30 @@
-#' Write parameters log file
+#' Write parameter log file from parameter list
 #'
-#' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.
+#' @param param_list named list of parameter values. Each element should be a parameter name - value pair. Values should be atomic vectors or NULL.
 #' @param out_dir_path character vector of length 1 representing the output directory where the params.log file should be stored.
-#' @param params_log_table logical vector of length 1 indicating if the params log table should be returned.
+#' @param param_log_table logical vector of length 1 indicating if the params log table should be returned.
 #'
 #' @return a params.log file written in <out_dir_path> and optionally the corresponding params log table.
 #' @export
 #'
 #' @examples
-#' # Define analysis parameters
-#' input_count <- "tpm_lengthScaledTPM"
-#' model_formula <- "~ n_gene_on + exposure + (1 | line_name)"
-#' cell_type <- "neuron"
-#' lines <- c("B856", "B156", "B067")
-#' protein_coding_only <- TRUE
-#' min_cnt_excl <- 0
-#' min_freq_incl <- 0.2
-#' padj <- 0.05
-#'
-#' params <- c("input_count", "model_formula", "cell_type", "lines",
-#'             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj")
+#' # Define params list
+#' param_list <- list(input_count = "tpm_lengthScaledTPM",
+#'                    model_formula = "~ n_gene_on + exposure + (1 | line_name)",
+#'                    cell_type = "neuron",
+#'                    lines = c("B856", "B156", "B067"),
+#'                    protein_coding_only = TRUE,
+#'                    min_cnt_excl = 0,
+#'                    min_freq_incl = 0.2,
+#'                    padj = 0.05)
 #'
 #' # Write parameters log file
-#' write_params_log(params = params, out_dir_path = "~")
+#' write_param_log(param_list = param_list, out_dir_path = "~")
 #'
 #' # Delete example parameters log file
 #' file.remove("~/params.log")
 #'
-write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
+write_param_log <- function(param_list, out_dir_path, param_log_table = TRUE) {
 
   # Check that out_dir_path is a valid and existing path
   if(!is.character(out_dir_path) ||
@@ -45,25 +42,18 @@ write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
 
   }
 
-  # Check that params_log_table is valid
-  if(!is.logical(params_log_table) ||
-     is.na(params_log_table) ||
-     length(params_log_table) != 1L) {
+  # Check that param_log_table is valid
+  if(!is.logical(param_log_table) ||
+     is.na(param_log_table) ||
+     length(param_log_table) != 1L) {
 
-    stop("Invalid params_log_table argument.",
+    stop("Invalid param_log_table argument.",
          call. = FALSE)
 
   }
 
   # Build params log
-  uneval_params <- substitute(params)
-
-  if(is.call(uneval_params)) {
-
-    params <- substitute(params)
-  }
-
-  current_log <- do.call(what = make_params_log, args = list(params))
+  current_log <- make_param_log(param_list = param_list)
 
   current_log_params <- current_log[, c("nm", "val")]
 
@@ -82,7 +72,7 @@ write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
                        row.names = FALSE,
                        col.names = TRUE)
 
-    if(params_log_table) {
+    if(param_log_table) {
 
       return(current_log_params)
 
@@ -143,7 +133,7 @@ write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
                        col.names = TRUE,
                        append = FALSE)
 
-    if(params_log_table) {
+    if(param_log_table) {
 
       return(current_log_params)
 
@@ -178,7 +168,7 @@ write_params_log <- function(params, out_dir_path, params_log_table = TRUE) {
                      col.names = FALSE,
                      append = TRUE)
 
-  if(params_log_table) {
+  if(param_log_table) {
 
     return(current_log_params)
 

@@ -1,20 +1,20 @@
-make_params_log_from_list <- function(params_list) {
+make_param_log <- function(param_list) {
 
-  # Check that params_list is a named list of atomic vectors
-  if(!is.list(params_list) ||
-     is.null(names(params_list)) ||
-     !all(vapply(X = params_list,
+  # Check that param_list is a named list of atomic vectors
+  if(!is.list(param_list) ||
+     is.null(names(param_list)) ||
+     !all(vapply(X = param_list,
                  FUN = function(x) is.atomic(x) | is.null(x),
                  FUN.VALUE = NA))) {
 
-    stop("Invalid params_list argument.",
-         "\nInput params_list is not a named list of atomic or NULL vectors.",
+    stop("Invalid param_list argument.",
+         "\nInput param_list is not a named list of atomic or NULL vectors.",
          call. = FALSE)
 
   }
 
   # Build params log
-  log_params <- lapply(X = params_list,
+  log_params <- lapply(X = param_list,
                        FUN = function(x) {
 
                          if(is.null(x)) {

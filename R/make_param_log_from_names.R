@@ -1,15 +1,15 @@
-make_params_log <- function(params) {
+make_param_log_from_names <- function(params) {
 
   # If params is a call, check the validity of params names
   uneval_params <- substitute(params)
 
   if(is.call(uneval_params)) {
 
-    params_nm_not_valid <- vapply(X = uneval_params[2:length(uneval_params)],
-                                  FUN = function(x) !check_valid_name(x),
-                                  FUN.VALUE = NA)
+    param_nm_not_valid <- vapply(X = uneval_params[2:length(uneval_params)],
+                                 FUN = function(x) !check_valid_name(x),
+                                 FUN.VALUE = NA)
 
-    if(sum(params_nm_not_valid) > 0L) {
+    if(sum(param_nm_not_valid) > 0L) {
 
       stop("Invalid params argument.",
            "\nInput params contains element(s) which are not of type character or are not syntactically valid name(s).",
@@ -29,11 +29,11 @@ make_params_log <- function(params) {
   }
 
   # If params is not a call, check the validity of params names
-  params_nm_not_valid <- vapply(X = params,
-                                FUN = function(x) !check_valid_name(x),
-                                FUN.VALUE = NA)
+  param_nm_not_valid <- vapply(X = params,
+                               FUN = function(x) !check_valid_name(x),
+                               FUN.VALUE = NA)
 
-  if(sum(params_nm_not_valid) > 0L) {
+  if(sum(param_nm_not_valid) > 0L) {
 
     stop("Invalid params argument.",
          "\nInput params contains element(s) which are not syntactically valid name(s).",
@@ -42,35 +42,35 @@ make_params_log <- function(params) {
   }
 
   # Check that params names are defined in global environment
-  params_nm_undefined <- vapply(X = params,
-                                FUN = function(x) !exists(x, envir = .GlobalEnv),
-                                FUN.VALUE = NA)
+  param_nm_undefined <- vapply(X = params,
+                               FUN = function(x) !exists(x, envir = .GlobalEnv),
+                               FUN.VALUE = NA)
 
-  params_nm_undefined <- params[params_nm_undefined]
+  param_nm_undefined <- params[param_nm_undefined]
 
-  if(length(params_nm_undefined) > 0L) {
+  if(length(param_nm_undefined) > 0L) {
 
-    stop("Params ", paste0(params_nm_undefined, collapse = ", "), " not defined.",
+    stop("Params ", paste0(param_nm_undefined, collapse = ", "), " not defined.",
          call. = FALSE)
 
   }
 
   # Check that params names are bound to atomic vectors
-  params_val_not_atomic_not_null <- vapply(X = params,
-                                           FUN = function(x) {
+  param_val_not_atomic_not_null <- vapply(X = params,
+                                          FUN = function(x) {
 
-                                             p <- eval(as.symbol(x))
+                                            p <- eval(as.symbol(x))
 
-                                             !is.atomic(p) & !is.null(p)
+                                            !is.atomic(p) & !is.null(p)
 
-                                           },
-                                           FUN.VALUE = NA)
+                                          },
+                                          FUN.VALUE = NA)
 
-  params_val_not_atomic_not_null <- params[params_val_not_atomic_not_null]
+  param_val_not_atomic_not_null <- params[param_val_not_atomic_not_null]
 
-  if(length(params_val_not_atomic_not_null) > 0L) {
+  if(length(param_val_not_atomic_not_null) > 0L) {
 
-    stop("Params ", paste0(params_val_not_atomic_not_null, collapse = ", "), " not of atomic type or NULL.",
+    stop("Params ", paste0(param_val_not_atomic_not_null, collapse = ", "), " not of atomic type or NULL.",
          call. = FALSE)
 
   }

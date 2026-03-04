@@ -1,4 +1,4 @@
-#' Get log ID from parameters values
+#' Get log ID from parameter names
 #'
 #' @param params character vector of object names. All objects should be defined in the global environment and bound to atomic vectors or NULL.
 #' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
@@ -21,15 +21,15 @@
 #'             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj")
 #'
 #' # Write parameters log file
-#' write_params_log(params = params, out_dir_path = "~")
+#' write_param_log_from_names(params = params, out_dir_path = "~")
 #'
 #' # Get log ID from parameters values
-#' params_log_id <- get_params_log_id(params = params, in_dir_path = "~")
+#' param_log_id <- get_param_log_id_from_names(params = params, in_dir_path = "~")
 #'
 #' # Delete example parameters log file
 #' file.remove("~/params.log")
 #'
-get_params_log_id <- function(params, in_dir_path) {
+get_param_log_id_from_names <- function(params, in_dir_path) {
 
   # Check that in_dir_path is a valid and existing path
   if(!is.character(in_dir_path) ||
@@ -63,7 +63,7 @@ get_params_log_id <- function(params, in_dir_path) {
     params <- substitute(params)
   }
 
-  current_log <- do.call(what = make_params_log, args = list(params))
+  current_log <- do.call(what = make_param_log_from_names, args = list(params))
 
   current_log_params <- current_log[, c("nm", "val")]
 

@@ -1,40 +1,32 @@
-#' Get log ID from parameters list
+#' Get log ID from parameter list
 #'
-#' @param params_list named list of parameter values. Each element should be a parameter name - value pair. Values should be atomic vectors or NULL.
+#' @param param_list named list of parameter values. Each element should be a parameter name - value pair. Values should be atomic vectors or NULL.
 #' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
 #'
-#' @return the log ID matching <params_list> in the params.log file at <in_dir_path>.
+#' @return the log ID matching <param_list> in the params.log file at <in_dir_path>.
 #' @export
 #'
 #' @examples
 #' # Define analysis parameters list
-#' params_list <- list(input_count = "tpm_lengthScaledTPM",
-#'                     model_formula = "~ n_gene_on + exposure + (1 | line_name)",
-#'                     cell_type = "neuron",
-#'                     lines = c("B856", "B156", "B067"),
-#'                     protein_coding_only = TRUE,
-#'                     min_cnt_excl = 0,
-#'                     min_freq_incl = 0.2,
-#'                     padj = 0.05)
-#'
-#' # Retrieve parameters names
-#' params_names <- names(params_list)
-#'
-#' # Assign parameters names to values in global environment
-#' for(i in params_names) {
-#'   assign(x = i, value = params_list[[i]])
-#' }
+#' param_list <- list(input_count = "tpm_lengthScaledTPM",
+#'                    model_formula = "~ n_gene_on + exposure + (1 | line_name)",
+#'                    cell_type = "neuron",
+#'                    lines = c("B856", "B156", "B067"),
+#'                    protein_coding_only = TRUE,
+#'                    min_cnt_excl = 0,
+#'                    min_freq_incl = 0.2,
+#'                    padj = 0.05)
 #'
 #' # Write parameters log file
-#' write_params_log(params = params_names, out_dir_path = "~")
+#' write_param_log(param_list = param_list, out_dir_path = "~")
 #'
 #' # Get log ID from parameters list
-#' params_log_id <- get_params_log_id_from_list(params_list = params_list, in_dir_path = "~")
+#' param_log_id <- get_param_log_id(param_list = param_list, in_dir_path = "~")
 #'
 #' # Delete example parameters log file
 #' file.remove("~/params.log")
 #'
-get_params_log_id_from_list <- function(params_list, in_dir_path) {
+get_param_log_id <- function(param_list, in_dir_path) {
 
   # Check that in_dir_path is a valid and existing path
   if(!is.character(in_dir_path) ||
@@ -60,21 +52,21 @@ get_params_log_id_from_list <- function(params_list, in_dir_path) {
 
   }
 
-  # Check that params_list is a named list of atomic vectors
-  if(!is.list(params_list) ||
-     is.null(names(params_list)) ||
-     !all(vapply(X = params_list,
+  # Check that param_list is a named list of atomic vectors
+  if(!is.list(param_list) ||
+     is.null(names(param_list)) ||
+     !all(vapply(X = param_list,
                  FUN = function(x) is.atomic(x) | is.null(x),
                  FUN.VALUE = NA))) {
 
-    stop("Invalid params_list argument.",
-         "\nInput params_list is not a named list of atomic or NULL vectors.",
+    stop("Invalid param_list argument.",
+         "\nInput param_list is not a named list of atomic or NULL vectors.",
          call. = FALSE)
 
   }
 
   # Build params log
-  current_log_params <- lapply(X = params_list,
+  current_log_params <- lapply(X = param_list,
                                FUN = function(x) {
 
                                  if(is.null(x)) {

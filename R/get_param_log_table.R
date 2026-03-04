@@ -1,4 +1,4 @@
-#' Get parameters log table from log ID
+#' Get parameter log table from log ID
 #'
 #' @param log_id character vector of length 1 representing the log ID for which parameters values should be retrieved.
 #' @param in_dir_path character vector of length 1 representing the input directory the params.log file should be read from.
@@ -21,18 +21,18 @@
 #'             "protein_coding_only", "min_cnt_excl", "min_freq_incl", "padj")
 #'
 #' # Write parameters log file
-#' write_params_log(params = params, out_dir_path = "~")
+#' write_param_log_from_names(params = params, out_dir_path = "~")
 #'
 #' # Get log ID from parameters values
-#' params_log_id <- get_params_log_id(params = params, in_dir_path = "~")
+#' param_log_id <- get_param_log_id_from_names(params = params, in_dir_path = "~")
 #'
 #' # Get parameters log table from log ID
-#' get_params_log_table(log_id = params_log_id, in_dir_path = "~")
+#' get_param_log_table(log_id = param_log_id, in_dir_path = "~")
 #'
 #' # Delete example parameters log file
 #' file.remove("~/params.log")
 #'
-get_params_log_table <- function(log_id, in_dir_path) {
+get_param_log_table <- function(log_id, in_dir_path) {
 
   # Check that in_dir_path is a valid and existing path
   if(!is.character(in_dir_path) ||
