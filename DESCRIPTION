@@ -1,5 +1,5 @@
-Package: param.stream
-Title: Stream parameter values across files
+Package: paramstream
+Title: Parameter-Based Run Tracking for Reproducible Data Analysis Workflows
 Version: 0.0.0.9000
 Authors@R: 
     person(
@@ -9,7 +9,7 @@ Authors@R:
     role = c("aut", "cre"),
     comment = c(ORCID = "0009-0008-4907-4330")
     )
-Description: Helper functions to track parameters values across data analysis files.
+Description: A lightweight parameter-to-run identifier registry for deterministic result storage and retrieval in R-based data analysis workflows.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
